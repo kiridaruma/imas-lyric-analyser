@@ -1,5 +1,7 @@
 # Lyric Analyser
 
+see also [this blog](http://kiridaruma.hateblo.jp/entry/2018/04/15/205502)
+
 歌詞解析に用いたスクリプト郡です
 
 resultフォルダ以下には、実際に解析した結果が入っています
