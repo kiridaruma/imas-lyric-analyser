@@ -16,4 +16,8 @@ class Song
 
     attr_accessor :title, :singer, :lyric
 
+    def export
+        txt = "#{@title}\n\n#{@singer}\n\n#{@lyric}"
+    end
+
 end
