@@ -1,12 +1,10 @@
 result = {}
 count = 0
 
-ARGV.each do |filename|
-    File.read(filename).split("\n").each do |word|
-        count += 1
-        result[word] = 0 if(result[word].nil?)
-        result[word] += 1
-    end
+ARGV.each do |word|
+    count += 1
+    result[word] = 0 if(result[word].nil?)
+    result[word] += 1
 end
 
 result = result.sort_by do |_, v|
