@@ -4,7 +4,7 @@ class Idol
         @@Idol[name]
     end
 
-    def checoSongAffiliation(song)
+    def checkSongAffiliation(song)
         affiliation = ''
         @@Idols.each do |name, aff|
             if song.singer.match(name) then
