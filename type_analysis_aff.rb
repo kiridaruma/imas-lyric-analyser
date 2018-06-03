@@ -7,7 +7,7 @@ ARGV.each do |filename|
     txt = File.new(filename).read
     song = Song.new(txt)
 
-    # どのシリーズの曲か判別
+    # series変数でどのシリーズの曲か判別
     # 765PRO ALLSTARS = 0
     # CINDERELLA GIRLS = 1
     # 765 MILLIONSTARS = 2
@@ -29,13 +29,7 @@ ARGV.each do |filename|
     trees.each do |tree|
         tree.chunks.each do |chunk|
             target_wordtype_tokens = chunk.tokens.select do |token|
-                token.type[0] == '名詞' &&
-                ( #token.type[1] == 'サ変接続' ||
-                token.type[1] == 'ナイ形容詞語幹' ||
-                token.type[1] == '形容動詞語幹' ||
-                token.type[1] == '一般' ||
-                token.type[1] == '代名詞'
-                )
+                #抽出したい単語の条件
             end
             target_wordtype_tokens.each do |token|
                 puts token.word
