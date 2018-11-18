@@ -37,12 +37,14 @@ Vagrant.configure("2") do |config|
     autoheader
     automake --force-missing --add-missing
     autoconf
-    ./configure
+    ./configure --with-charset=UTF-8
     make
     make check
     make install
     ldconfig
     cd ..
+
+    echo "UTF-8" > /usr/local/lib/cabocha/model/charset-file.txt
 
     cd #{SrcFolder}
     gem install mecab cabocha --no-ri --no-rdoc
