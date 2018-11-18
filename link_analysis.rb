@@ -21,7 +21,9 @@ ARGV.each do |filename|
         target_words = []
 
         idx = head_tokens.index do |token|
-            target_words.any?(token.word)
+            target_words.any? do |target|
+                token.word == target
+            end
         end
         next if(!idx)
 

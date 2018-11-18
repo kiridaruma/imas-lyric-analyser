@@ -29,10 +29,19 @@ ARGV.each do |filename|
     trees.each do |tree|
         tree.chunks.each do |chunk|
             target_wordtype_tokens = chunk.tokens.select do |token|
-                #抽出したい単語の条件
+                # token.type[0] == "名詞" && (
+                #     token.type[1] == "サ変接続" ||
+                #     token.type[1] == "形容動詞語幹" ||
+                #     token.type[1] == "副詞可能" ||
+                #     token.type[1] == "接尾" ||
+                #     token.type[1] == "代名詞"
+                # )
+                # token.type[0] == "動詞" && token.type[1] == "自立"
+                # token.type[0] == "形容詞" && token.type[1] == "自立"
+                # token.type[0] == "感動詞"
             end
             target_wordtype_tokens.each do |token|
-                puts token.word
+                puts token.word if !token.word.match(/^[0-9!-\/:-@\[-`{-~]+$/)
             end
         end
     end
