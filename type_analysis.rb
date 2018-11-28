@@ -1,10 +1,25 @@
 require 'cabocha'
-require __dir__+'/lib/song.rb'
-require __dir__+'/lib/tree.rb'
+require __dir__+'/lib/song.rb';
+require __dir__+'/lib/idol.rb';
+require __dir__+'/lib/tree.rb';
 
 ARGV.each do |filename|
     txt = File.new(filename).read
     song = Song.new(txt)
+
+    # series変数でどのシリーズの曲か判別
+    # 765PRO ALLSTARS = 0
+    # CINDERELLA GIRLS = 1
+    # 765 MILLIONSTARS = 2
+    # 315 STARS = 3
+    # Other = 4
+    idol = Idol.new()
+    serieses = [0,1,2,3,4]
+    song_seriese = idol.checkSongAffiliation(song)
+    if !serieses.include?(song_seriese) then
+        next
+    end
+
     STDERR.puts song.title
     parser = CaboCha::Parser.new
     trees = song.lyric.split("\n").map do |line|
@@ -15,13 +30,13 @@ ARGV.each do |filename|
     trees.each do |tree|
         tree.chunks.each do |chunk|
             target_wordtype_tokens = chunk.tokens.select do |token|
-                # token.type[0] == "名詞" && (
-                #     token.type[1] == "サ変接続" ||
-                #     token.type[1] == "形容動詞語幹" ||
-                #     token.type[1] == "副詞可能" ||
-                #     token.type[1] == "接尾" ||
-                #     token.type[1] == "代名詞"
-                # )
+                token.type[0] == "名詞" && (
+                    token.type[1] == "サ変接続" ||
+                    token.type[1] == "形容動詞語幹" ||
+                    token.type[1] == "副詞可能" ||
+                    token.type[1] == "接尾" ||
+                    token.type[1] == "代名詞"
+                )
                 # token.type[0] == "動詞" && token.type[1] == "自立"
                 # token.type[0] == "形容詞" && token.type[1] == "自立"
                 # token.type[0] == "感動詞"

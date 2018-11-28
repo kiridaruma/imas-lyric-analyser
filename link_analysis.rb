@@ -1,10 +1,26 @@
 require 'cabocha'
+require __dir__+'/lib/idol.rb'
 require __dir__+'/lib/song.rb'
 require __dir__+'/lib/tree.rb'
 
 ARGV.each do |filename|
     txt = File.new(filename).read
     song = Song.new(txt)
+
+
+    # series変数でどのシリーズの曲か判別
+    # 765PRO ALLSTARS = 0
+    # CINDERELLA GIRLS = 1
+    # 765 MILLIONSTARS = 2
+    # 315 STARS = 3
+    # Other = 4
+    idol = Idol.new()
+    serieses = [0,1,2,3,4]
+    song_seriese = idol.checkSongAffiliation(song)
+    if !serieses.include?(song_seriese) then
+        next
+    end
+
     STDERR.puts song.title
     parser = CaboCha::Parser.new
     trees = song.lyric.split("\n").map do |line|
@@ -29,11 +45,13 @@ ARGV.each do |filename|
 
         # 係り受け先探索
         to_idx = tree.links[idx]
-        puts head_tokens[to_idx].word if(to_idx != -1)
-
+        if(to_idx != -1) then
+            puts head_tokens[to_idx].word if !token.word.match(/^[0-9!-\/:-@\[-`{-~]+$/)
+        end
         # 係り受け元探索
         from_idx = tree.links.index(idx)
-        puts head_tokens[from_idx].word if(!from_idx.nil?)
-
+        if(!from_idx.nil?) then
+            puts head_tokens[from_idx].word  if !token.word.match(/^[0-9!-\/:-@\[-`{-~]+$/)
+        end
     end
 end
