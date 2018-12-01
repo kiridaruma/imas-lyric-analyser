@@ -12,7 +12,7 @@ result = result.sort_by do |_, v|
 end
 
 result.each do |k, v|
-    puts "#{k} : #{v} \t\t #{v.to_f/count}"
+    puts "#{k} : #{v} \t\t #{v.to_f/count * 100}%"
 end
 
 puts count
